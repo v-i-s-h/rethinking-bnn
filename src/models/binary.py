@@ -172,13 +172,10 @@ class bop(default):
     kernel_quantizer = "ste_sign"
     kernel_constraint = "weight_clip"
 
-    threshold = 1e-6
-    gamma = 1e-3
-
     optimizer = "Bop"
     opt_param = dict(
-        threshold=threshold,
-        gamma=gamma
+        threshold=1e-6,
+        gamma=1e-3
     )
 
 
@@ -264,7 +261,7 @@ class default(HParams):
     )
 
 @registry.register_hparams(binaryvgg)
-class Bop(default):
+class bop(default):
     optimizer = "Bop"
     opt_param = dict(
         threshold=1e-6,
