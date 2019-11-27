@@ -11,6 +11,7 @@ from zookeeper import cli, build_train
 from experiment import Experiment
 import models, data, optimizers
 import callbacks
+import utils
 
 # Register train command and associated switches
 @cli.command()
@@ -143,8 +144,18 @@ def test(build_model, dataset, hparams, logdir):
     # Print Summary of models
     lq.models.summary(model)
 
-    # # Load model weights from the specified file
-    model.load_weights(model_path)
+    # Load model weights from the specified file
+    print("Before loading...")
+    for l in model.layers:
+        for _w in l.trainable_weights:
+            print( "{:40s}".format(l.name, _w.name), tf.keras.backend.get_value(_w).flatten()[:3])
+    # model.load_weights(model_path)
+    utils.load_weights(model, model_path)
+    print("After loading...")
+    for l in model.layers:
+        for _w in l.trainable_weights:
+            print( "{:25s}".format(l.name, _w.name), tf.keras.backend.get_value(_w).flatten()[:3])
+
     
     # Test this model
     test_log = model.evaluate(

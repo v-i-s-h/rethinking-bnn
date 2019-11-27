@@ -152,6 +152,7 @@ class default(HParams):
 class latentweights(HParams):
     input_quantizer = "ste_sign"
     kernel_quantizer = None
+    # kernel_quantizer = tf.keras.layers.Activation("linear")
     kernel_constraint = None
     
     # Training properties
